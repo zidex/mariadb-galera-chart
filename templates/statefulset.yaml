@@ -86,7 +86,6 @@ spec:
         matchLabels:
           {{ .Values.persistence.selector.label }}: {{ .Values.persistence.selector.value }}
       {{- end }}      
-{{- end }}    
       accessModes:
       - {{ .Values.persistence.accessMode | quote }}
       resources:

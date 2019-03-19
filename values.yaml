@@ -30,10 +30,6 @@ persistence:
   # If not using dynamic provisioning, Persistent Volumes must be re-created and setup with labels that can be used to refine the kubernetes PVC bind process.
   useDynamicProvisioning: true
 
-dataPVC:
-  name: "galera-data-pvc"
-  ## specify the storageClassName you want to use
-  ## if you don't specify a storageClassName it will use the default
   storageClassName: ""
   
   # if your not using dynamic provisioning, you can use selectors to 
@@ -42,7 +38,7 @@ dataPVC:
     label: ""
     value: ""
 
-size: 2Gi
+  size: 2Gi
 
 ## Configure MariaDB with a custom my.cnf file
 ## ref: https://mariadb.com/kb/en/mariadb/configuring-mariadb-with-mycnf/#example-of-configuration-file

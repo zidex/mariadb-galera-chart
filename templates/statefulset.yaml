@@ -75,34 +75,21 @@ spec:
         volumeMounts:
         - name: datadir
           mountPath: "/var/lib/mysql"
-{{- if .Values.persistence.enabled }}
   volumeClaimTemplates:
   - metadata:
-      name: {{ .Values.dataPVC.name | quote }}
-      labels:
-        app: {{ template "fullname" . }}
-        chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
-        release: "{{ .Release.Name }}"
-        heritage: "{{ .Release.Service }}"
+      name: datadir
     spec:
-      {{- if .Values.persistence.useDynamicProvisioning }}
-      # if present, use the storageClassName from the values.yaml, else use the
-      # default storageClass setup by kube Administrator
-      # setting storageClassName to nil means use the default storage class
-      storageClassName: {{ default nil .Values.dataPVC.storageClassName | quote }}
-      {{- else }}
-      # bind to an existing pv.
-      # setting storageClassName to "" disables dynamic provisioning 
-      storageClassName: {{ default "" .Values.dataPVC.storageClassName | quote }}
-      {{- if .Values.dataPVC.selector.label }}
+      storageClassName: {{ .Values.persistence.storageClass | quote }}
+      {{- if .Values.persistence.selector.label }}
       # use selectors in the binding process
       selector:
-        matchExpressions:
-          - {key: {{ .Values.dataPVC.selector.label }}, operator: In, values: [{{ .Values.dataPVC.selector.value }}]}
+        matchLabels:
+          {{ .Values.persistence.selector.label }}: {{ .Values.persistence.selector.value }}
       {{- end }}      
-      {{- end }}
-      accessModes: ["ReadWriteOnce"]
+{{- end }}    
+      accessModes:
+      - {{ .Values.persistence.accessMode | quote }}
       resources:
         requests:
-          storage: {{ .Values.dataPVC.size | quote }}
+          storage: {{ .Values.persistence.size | quote }}
 {{- end }}

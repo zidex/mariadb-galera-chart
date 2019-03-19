@@ -22,17 +22,22 @@ imagePullPolicy: IfNotPresent
 ## Number of pods in the StatefulSet
 replicas: 3
 
-## Enable persistence using Persistent Volume Claims
-## ref: https://kubernetes.io/docs/user-guide/persistent-volumes/
-##
 persistence:
   enabled: true
-  ## If defined, volume.beta.kubernetes.io/storage-class: <storageClass>
-  ## Default: volume.alpha.kubernetes.io/storage-class: default
-  ##
-  # storageClass:
-  accessMode: ReadWriteOnce
-  size: 8Gi
+  # If not using dynamic provisioning, Persistent Volumes must be re-created and setup with labels that can be used to refine the kubernetes PVC bind process.
+  useDynamicProvisioning: true
+
+  ## specify the storageClassName you want to use
+  ## if you don't specify a storageClassName it will use the default
+  storageClassName: ""
+  
+  # if your not using dynamic provisioning, you can use selectors to 
+  # refine the binding process. You cannot specify a selector if your using dynamic provisioning!
+  selector:
+    label: ""
+    value: ""
+
+size: 2Gi
 
 ## Configure MariaDB with a custom my.cnf file
 ## ref: https://mariadb.com/kb/en/mariadb/configuring-mariadb-with-mycnf/#example-of-configuration-file

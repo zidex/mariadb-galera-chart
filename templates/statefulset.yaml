@@ -90,7 +90,10 @@ spec:
       # use selectors in the binding process
       selector:
         matchExpressions:
-          - {key: {{ .Values.persistence.selector.label }}, operator: In, values: [{{ .Values.persistence.selector.value }}]}
+          - key: {{ .Values.persistence.selector.label }}
+            operator: In
+            values:
+            - {{ .Values.persistence.selector.value }}
       {{- end }}      
       accessModes: ["ReadWriteOnce"]
       resources:

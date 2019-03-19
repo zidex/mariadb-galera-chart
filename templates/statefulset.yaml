@@ -89,8 +89,8 @@ spec:
       {{- if .Values.persistence.selector.label }}
       # use selectors in the binding process
       selector:
-        matchLabel:
-          {{ .Values.persistence.selector.label }}: {{ .Values.persistence.selector.value }}
+        matchExpressions:
+          - {key: {{ .Values.persistence.selector.label }}, operator: In, values: [{{ .Values.persistence.selector.value }}]}
       {{- end }}      
       accessModes: ["ReadWriteOnce"]
       resources:

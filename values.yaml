@@ -30,7 +30,7 @@ persistence:
   # If not using dynamic provisioning, Persistent Volumes must be re-created and setup with labels that can be used to refine the kubernetes PVC bind process.
   useDynamicProvisioning: true
 
-  storageClassName: ""
+  storageClass: ""
 
   accessMode: ReadWriteOnce
   

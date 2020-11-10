@@ -21,6 +21,8 @@ spec:
       - name: config
         configMap:
           name: {{ template "fullname" . }}
+      nodeSelector:
+        {{ .Values.nodeSelector.label }}: {{ .Values.nodeSelector.value }}
       containers:
       - name: {{ template "dnsname" . }}
         image: "{{ .Values.image }}"
